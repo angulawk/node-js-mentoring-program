@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "task2": "nodemon ./task2.js localhost 8080"
+    "babel-node": "babel-node --presets=/*a*/",
+    "task3": "nodemon --exec babel-node -- ./task3.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,12 @@
   },
   "homepage": "https://github.com/angulawk/node-js-mentoring-program#readme",
   "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-cli": "^7.0.0-0",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
+    "babel-preset-env": "^1.7.0",
     "nodemon": "^2.0.1"
   },
   "dependencies": {
