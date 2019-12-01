@@ -1,0 +1,22 @@
+{
+  "name": "js-mentoring-program",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angulawk/node-js-mentoring-program.git"
+  },
+  "author": "Agnieszka Wojcik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/angulawk/node-js-mentoring-program/issues"
+  },
+  "homepage": "https://github.com/angulawk/node-js-mentoring-program#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}
