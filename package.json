@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "task1": "nodemon ./task1.js localhost 8080",
     "task2": "nodemon ./task2.js localhost 8080"
   },
   "repository": {
