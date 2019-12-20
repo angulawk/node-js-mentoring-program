@@ -1,20 +1,16 @@
 import fs from 'fs';
 import csv from 'csvtojson';
+import { pipeline } from 'stream';
 
-const stream = fs.createWriteStream('output.txt', {
-  flags: 'a' // 'a' means appending (old data will be preserved)
-})
+const readStream = fs.createReadStream('./csv/node_mentoring_t1_2_input_example.csv');
+const writeStream = fs.createWriteStream('output.txt');
 
-const createTxtFile = async () => {
-  try {
-    const json = await csv().fromStream(fs.createReadStream('./csv/node_mentoring_t1_2_input_example.csv'));
-  
-    json.map(({ Book, Author, Price }) => {
-      stream.write(`{ 'book': ${Book}, 'author': ${Author}, 'price': ${Price} } \r\n`)
-    });
-  } catch(err) {
-    console.log(`Error ${err}`);
-  }
-}
-
-createTxtFile();
+pipeline(
+  readStream.pipe(
+    csv({
+      ignoreColumns: /(Amount)/
+    })
+  ),
+  writeStream,
+  err => err ? console.error(err) : console.log('Done!')
+);
