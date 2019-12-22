@@ -39,7 +39,6 @@ const errorResponse = (schemaErrors: SchemaError[]): ErrorResponse => {
   }
 }
 
-
 const validateSchema = schema => {
   return (req: Request, res: Response, next: NextFunction) => {
     const { error }: { error: ExpressJoiError|any } = schema.validate(req.body, {
@@ -113,4 +112,4 @@ app.delete("/user/:id", (req: Request, res: Response, next: NextFunction) => {
 
   res.json(getUsers());
   next();
-})
+});
