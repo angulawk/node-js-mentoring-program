@@ -1,6 +1,9 @@
 import uuid from "uuid/v1";
+import {
+  User
+} from "../task4/typings";
 
-let users = [
+let users: User[] = [
   {
     id: uuid(),
     login: "spiderman",
@@ -31,7 +34,7 @@ let users = [
   }
 ];
 
-export const updateUsers = updatedUsers => users = updatedUsers;
-export const getUsers = () => users;
+export const updateUsers: User[]|any = updatedUsers => users = updatedUsers;
+export const getUsers: User[]|any = () => users;
 
 export default users;
