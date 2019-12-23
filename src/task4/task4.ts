@@ -58,7 +58,7 @@ const userSchema = Joi
   .keys({
     id: Joi.string().required(),
     login: Joi.string().alphanum().min(6).max(16).required(),
-    password: Joi.string().pattern(new RegExp("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]$")).required(),
+    password: Joi.string().regex(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/i, "Password must contain numbers and letters").required(),
     age: Joi.number().min(4).max(130).required(),
     isDeleted: Joi.boolean().required()
   });
