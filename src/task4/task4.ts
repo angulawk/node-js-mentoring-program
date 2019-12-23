@@ -41,6 +41,7 @@ const errorResponse = (schemaErrors: SchemaError[]): ErrorResponse => {
 
 const validateSchema = schema => {
   return (req: Request, res: Response, next: NextFunction) => {
+    const { body }: Request = req.body;
     const { error }: { error: ExpressJoiError|any } = schema.validate(req.body, {
       allowUnknown: false,
       abortEarly: false,
