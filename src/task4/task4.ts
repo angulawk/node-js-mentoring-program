@@ -1,5 +1,4 @@
 import express from "express";
-import uuid from "uuid/v1";
 import * as Joi from '@hapi/joi';
 import {
   Response,
@@ -7,18 +6,21 @@ import {
   NextFunction
 } from "express";
 import {
-  ValidatedRequest,
   ExpressJoiError
 } from "express-joi-validation";
 import {
-  UserSchema,
-  User,
   SchemaError,
   ErrorResponse
 } from "./typings";
 
-import getAutoSuggestUsers from "../utils/getAutoSuggestUsers.js";
-import { updateUsers, getUsers } from "../utils/users.js";
+import {
+  getUsers,
+  getUser,
+  addUser,
+  updateUser,
+  getAutoSuggestList,
+  deleteUser
+} from "../utils/users.js";
 
 const app = express();
 
@@ -42,7 +44,7 @@ const errorResponse = (schemaErrors: SchemaError[]): ErrorResponse => {
 const validateSchema = schema => {
   return (req: Request, res: Response, next: NextFunction) => {
     const { body }: Request = req.body;
-    const { error }: { error: ExpressJoiError|any } = schema.validate(req.body, {
+    const { error }: { error: ExpressJoiError|any } = schema.validate(body, {
       allowUnknown: false,
       abortEarly: false,
       convert: true
@@ -64,53 +66,14 @@ const userSchema = Joi
     isDeleted: Joi.boolean().required()
   });
 
-app.get("/users", (req: Request, res: Response, next: NextFunction) => {
-  res.json(getUsers());
-  next();
-})
+app.get("/users", getUsers);
 
-app.get("/user/:id", (req: Request, res: Response, next: NextFunction) => {
-  const user: User = getUsers().find((user: User) => user.id === req.params.id);
-  res.json(user);
-  next();
-});
+app.get("/user/:id", getUser);
 
-app.post("/user", validateSchema(userSchema), (req: ValidatedRequest<UserSchema>, res: Response, next: NextFunction) => {
-  const user: User = {
-    id: uuid(),
-    ...req.body
-  };
-  getUsers().push(user);
+app.post("/user", validateSchema(userSchema), addUser);
 
-  res.json(getUsers());
-  next();
-});
+app.put("/user/:id", validateSchema(userSchema), updateUser);
 
-app.put("/user/:id", validateSchema(userSchema), (req: ValidatedRequest<UserSchema>, res: Response, next: NextFunction) => {
-  const updatedUsers: User[] = getUsers().map((user: User) => user.id === req.params.id ?
-    { id: user.id,
-      ...req.body
-    } : user);
-  updateUsers(updatedUsers);
+app.get("/auto-suggest/:loginSubstring", getAutoSuggestList);
 
-  res.json(getUsers());
-  next();
-});
-
-app.get("/auto-suggest/:loginSubstring", (req: Request, res: Response, next: NextFunction) => {
-  const autoSuggestUsers: User[] = getAutoSuggestUsers(req.params.loginSubstring, req.query.limit);
-
-  res.json(autoSuggestUsers);
-  next();
-});
-
-app.delete("/user/:id", (req: Request, res: Response, next: NextFunction) => {
-  const updatedUsers: User[] = getUsers().map((user: User) => user.id === req.params.id ? {
-    ...user,
-    isDeleted: true
-  } : user);
-  updateUsers(updatedUsers);
-
-  res.json(getUsers());
-  next();
-});
+app.delete("/user/:id", deleteUser);

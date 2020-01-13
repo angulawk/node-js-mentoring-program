@@ -11,6 +11,13 @@ export type User = {
   isDeleted: boolean;
 }
 
+export type UpdatedUser = {
+  login?: string;
+  password?: string;
+  age?: number;
+  isDeleted?: boolean;
+}
+
 export interface UserSchema extends ValidatedRequestSchema {
   [ContainerTypes.Query]: User
 }

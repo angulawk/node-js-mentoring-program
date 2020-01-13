@@ -1,15 +1,15 @@
-import { getUsers } from "./users";
+import { users } from "./users";
 import {
   User
 } from "../task4/typings";
 
-const getAutoSuggestUsers: User[]|any = (loginSubstring: string, limit: number) => {
-  const filteredArray: User[] = getUsers().filter((item: User) => item.login.includes(loginSubstring));
+const getAutoSuggestUsers = (loginSubstring: string, limit: number): User[] => {
+  const filteredArray: User[] = users.filter((item: User) => item.login.includes(loginSubstring));
   filteredArray
     .sort(( a: User, b: User ) => {
       return (a.login > b.login) ? 1 : ((b.login > a.login) ? -1 : 0)
     })
-    .splice(limit, filteredArray.length - 1);
+    .slice(0, limit);
   return filteredArray;
 }
 
