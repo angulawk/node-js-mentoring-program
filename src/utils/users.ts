@@ -10,7 +10,8 @@ import {
 import {
   Response,
   Request,
-  NextFunction
+  NextFunction,
+  ErrorRequestHandler
 } from "express";
 import getAutoSuggestUsers from "../utils/getAutoSuggestUsers.js";
 
@@ -77,12 +78,22 @@ export const addUserWithId = (body: User) => {
   return user;
 }
 
-export const getUser = (req: Request, res: Response, next: NextFunction) => {
+export const getUser = (err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
+  if(err) {
+    res.status(500);
+    next(err);
+  }
+  
   res.json(getUserById(req.params.id));
   next();
 }
 
-export const addUser = (req: ValidatedRequest<UserSchema>, res: Response, next: NextFunction) => {
+export const addUser = (err: ErrorRequestHandler, req: ValidatedRequest<UserSchema>, res: Response, next: NextFunction) => {
+  if(err) {
+    res.status(500);
+    next(err);
+  }
+
   const newUser: User = addUserWithId(req.body);
   users.push(newUser);
 
@@ -90,21 +101,36 @@ export const addUser = (req: ValidatedRequest<UserSchema>, res: Response, next: 
   next();
 }
 
-export const updateUser = (req: ValidatedRequest<UserSchema>, res: Response, next: NextFunction) => {
+export const updateUser = (err: ErrorRequestHandler, req: ValidatedRequest<UserSchema>, res: Response, next: NextFunction) => {
+  if(err) {
+    res.status(500);
+    next(err);
+  }
+  
   const updatedUser: User = updateUserById(req.params.id, req.body);
 
   res.json(updatedUser);
   next();
 }
 
-export const getAutoSuggestList = (req: Request, res: Response, next: NextFunction) => {
+export const getAutoSuggestList = (err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
+  if(err) {
+    res.status(500);
+    next(err);
+  }
+
   const suggestedUsers: User[] = getAutoSuggestUsers(req.params.loginSubstring, req.query.limit);
 
   res.json(suggestedUsers);
   next();
 }
 
-export const deleteUser = (req: Request, res: Response, next: NextFunction) => {
+export const deleteUser = (err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
+  if(err) {
+    res.status(500);
+    next(err);
+  }
+
   const deletedUser: User = updateUserById(req.params.id, { isDeleted: true });
 
   res.json(deletedUser);
