@@ -1,4 +1,10 @@
 {
-  "presets": ["@babel/preset-env"],
-  "plugins": ["dynamic-import-node"]
+  "presets": [
+    "@babel/preset-env",
+    "@babel/typescript"
+  ],
+  "plugins": [
+    "dynamic-import-node",
+    "@babel/plugin-transform-typescript"
+  ]
 }
