@@ -9,7 +9,8 @@
     "task1": "nodemon ./task1.js localhost 8080",
     "task2": "nodemon ./task2.js localhost 8080",
     "task3": "nodemon --exec babel-node -- ./task3.js",
-    "task4": "tsc && nodemon --exec babel-node -- ./dist/task4/task4.js"
+    "task4": "tsc && nodemon --exec babel-node -- ./dist/index.js",
+    "init-data": "tsc && nodemon --exec babel-node -- ./dist/data-access/initData.js"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,9 @@
     "csvtojson": "^2.0.10",
     "express": "^4.17.1",
     "express-joi-validation": "^4.0.3",
+    "pg": "^7.17.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.3",
     "stream": "0.0.2",
     "uuid": "^3.3.3"
   }
