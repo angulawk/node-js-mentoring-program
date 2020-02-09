@@ -1,4 +1,3 @@
-// import ValidationService from "../services/ValidationService";
 import express from "express";
 import * as routes from "../routes";
 
