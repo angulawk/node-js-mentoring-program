@@ -24,3 +24,16 @@ export interface ErrorResponse {
   status: string;
   errors: SchemaError[];
 }
+
+type Permission = "READ" | "WRITE" | "DELETE" | "SHARE" | "UPLOAD_FILES";
+
+export type GroupType = {
+  id: string;
+  name: string;
+  permissions: Array<Permission>;
+}
+
+export type UserGroupType = {
+  groupId: string;
+  userId: string;
+}
