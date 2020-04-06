@@ -8,8 +8,8 @@ export default class UserService {
     return users;
   }
 
-  async GetUser(id): Promise<UserType> {
-    const user: UserType = await User.findOne({ where: {id} })
+  async GetUser(id: string): Promise<UserType> {
+    const user: UserType = await User.findOne({ where: { id } })
     return user;
   }
 
@@ -42,7 +42,7 @@ export default class UserService {
     return suggestedUsers;
   }
 
-  async DeleteUser(id): Promise<UserType> {
+  async DeleteUser(id: string): Promise<UserType> {
     await User.update({ isDeleted: true }, {
       where: { id }
     });
